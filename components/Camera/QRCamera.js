@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Vibration } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import QRModal from '../Modal/QRModal';
 
@@ -18,6 +18,7 @@ export default function QRCamera() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned({ type, data });
     console.log(type, data)
+    Vibration.vibrate(100);
     toggleModal()
     //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };

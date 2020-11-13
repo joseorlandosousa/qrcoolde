@@ -6,36 +6,32 @@ import {
   Button,
   TouchableWithoutFeedback,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
+
 import { color, spacing, radius, font } from "../../constants/Vars";
+import { formatData } from "../../utils/dataType";
+import t from '../../locales/i18n';
 import Modal from "react-native-modal";
 
+
 import QRItem from "../Item/QRItem";
+import QRText from "../Text/QRText";
+
+
 
 export default function QRModal(props) {
-  const [dataType, setDataType] = useState({title: null, type: null});
+  const [dataType, setDataType] = useState({ title: null, type: null });
 
   useEffect(() => {
     (async () => {
-      formatTitle();
+      setData();
     })();
   }, [props.scanned]);
 
-  const formatTitle = () => {
-      
-    let type;
+  const setData = () => {
     if(!!props.scanned.data){
-      
-        if(props.scanned.data.indexOf('http') != -1){
-            type = {title: "URL", type: 'url'}
-        }
-        else if(props.scanned.data.indexOf('tel:') != -1){
-            type = {title: "Telefone", type: 'tel'}
-        }
-        else {
-            type = {title: "Texto", type: 'text'}
-        }
-
-        setDataType(type);
+      console.log(formatData(props.scanned.data))
+      setDataType(formatData(props.scanned.data));
     }
   };
   return (
@@ -53,10 +49,20 @@ export default function QRModal(props) {
         </TouchableWithoutFeedback>
       }
     >
-      <View style={styles.modal}>
-        <Text style={styles.title}>{dataType.title}</Text>
-        <QRItem content={props.scanned.data}></QRItem>
-      </View>
+      {!!dataType && 
+        <View style={styles.modal}>
+          <View style={styles.header}>
+            <Feather
+              name={dataType.icon}
+              size={24}
+              color={color.icon}
+              style={{ marginRight: spacing.sm }}
+            />
+            <QRText type="title">{t(dataType.type)}</QRText>
+          </View>
+          <QRItem content={props.scanned.data} type={dataType.type}></QRItem>
+        </View>
+      }
     </Modal>
   );
 }
@@ -73,9 +79,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: radius.lg,
     borderTopRightRadius: radius.lg,
   },
-  title: {
-    color: color.text,
-    fontSize: font.xl,
-    fontWeight: "bold",
+  header: {
+    marginBottom: spacing.md,
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
