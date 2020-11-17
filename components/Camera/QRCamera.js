@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Vibration } from "react-native";
+import { Text, View, StyleSheet, Vibration, ActivityIndicator } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import QRModal from '../Modal/QRModal';
+import { color } from "../../constants/Vars";
+import QRCamNoAccess from "../Pages/QRCamNoAccess";
 
 export default function QRCamera() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -10,10 +12,14 @@ export default function QRCamera() {
 
   useEffect(() => {
     (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
+      handleRequestPermission();
     })();
   }, []);
+
+  const handleRequestPermission = async () => {
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    setHasPermission(status === "granted");
+  }
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned({ type, data });
@@ -32,10 +38,17 @@ export default function QRCamera() {
   }
 
   if (hasPermission === null) {
-    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text >Requesting for camera permission</Text></View>;
+    return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: color.primary}}>
+      <ActivityIndicator size="large" color={color.white} />
+      {/* <Text >Requesting for camera permission</Text> */}
+    </View>
+    );
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return (
+        <QRCamNoAccess requestPermission={handleRequestPermission}></QRCamNoAccess>
+    );
   }
 
   return (

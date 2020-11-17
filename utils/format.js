@@ -76,7 +76,8 @@ const _formatPhone = (props) => {
       contentType: "phone",
       label: null,
       content: phone
-    }]
+    }], 
+    raw: props
   };
 
 };
@@ -104,7 +105,8 @@ const _formatSMS = (props) => {
   return {
     type: "sms",
     icon: "message-square",
-    content
+    content, 
+    raw: props
   };
 
 };
@@ -138,7 +140,8 @@ const _formatEmail = (props) => {
   return {
     type: "email",
     icon: "mail",
-    content
+    content, 
+    raw: props
   };
 
 };
@@ -148,7 +151,6 @@ const _formatEmail = (props) => {
  * @param {String} props 
  */
 const _formatLocation = (props) => {
-  console.log(props)
   const data = props.replace('geo:', '').split(',');
   const content = [];
 
@@ -167,7 +169,8 @@ const _formatLocation = (props) => {
   return {
     type: "location",
     icon: "map-pin",
-    content
+    content, 
+    raw: props
   };
 
 };
@@ -202,7 +205,8 @@ const _formatWifi = (props) => {
   return {
     type: "wifi",
     icon: "wifi",
-    content
+    content, 
+    raw: props
   };
 
 };
@@ -232,7 +236,8 @@ const _formatWhatsApp = (props) => {
   return {
     type: "whatsapp",
     icon: "message-circle",
-    content
+    content, 
+    raw: props
   };
 
 };
@@ -254,7 +259,8 @@ const _formatUrl = (props) => {
   return {
     type: "url",
     icon: "link",
-    content: content
+    content: content, 
+    raw: props
   };
 
 };
@@ -277,7 +283,8 @@ const _formatText = (props) => {
   return {
     type: "text",
     icon: "file-text",
-    content: content
+    content: content, 
+    raw: props
   };
 
 };
@@ -363,7 +370,8 @@ const _formatContact = (props) => {
   return {
     type: "contact",
     icon: "user",
-    content
+    content, 
+    raw: props
   };
 
 };

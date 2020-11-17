@@ -32,10 +32,16 @@ export default {
         sms: "Enviar SMS",
         email: "Enviar e-mail",
         location: "Abrir no mapa",
-        wifi: "Conectar rede",
+        wifi: "Copiar a senha",
         whatsapp: "Enviar WhatsApp",
         url: "Abrir no navegador",
         text: "Copiar texto",
+        camPermission: "Habilitar a camera"
+    },
+
+    camPermission: {
+        title: "Camera sem permissão",
+        description: "A camera é usada somente para ler o QRCode."
     }
 
 }

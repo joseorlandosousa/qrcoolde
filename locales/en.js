@@ -27,15 +27,22 @@ export default {
 
 
     btn: {
-        contact: "Contact",
-        phone: "Phone Number",
-        sms: "SMS",
+        contact: "Add contact",
+        phone: "Call",
+        sms: "Send SMS",
         email: "E-mail",
-        location: "Location",
-        wifi: "Wifi",
-        whatsapp: "WhatsApp",
-        url: "URL",
-        text: "Text",
+        location: "Open on map",
+        wifi: "Copy password",
+        whatsapp: "Send WhatsApp",
+        url: "Open in browser",
+        text: "Copy text",
+        camPermission: "Enable the camera"
+    },
+
+    camPermission: {
+        title: "Camera without permission",
+        description: "The camera is used only to read the QRCode."
     }
+
 
 }

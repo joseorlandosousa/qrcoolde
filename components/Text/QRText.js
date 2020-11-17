@@ -20,7 +20,6 @@ export default function QRText(props) {
 
 
   const formatContent = (content) => {
-    console.log(props.contentType)
     switch (props.contentType) {
       case "phone":
         return !!formatNumber(content, 'International') ? formatNumber(content, 'International') : content;   
@@ -60,5 +59,24 @@ const styles = StyleSheet.create({
     color: color.white,
     fontSize: font.lg,
     fontFamily: "Nunito_600SemiBold",
+  },
+
+  btn_inverse: {
+    color: color.primary,
+    fontSize: font.lg,
+    fontFamily: "Nunito_600SemiBold",
+  },
+
+  display: {
+    color: color.white,
+    fontSize: font.xxl,
+    lineHeight: font.xxl,
+    fontFamily: "Nunito_700Bold",
+    paddingTop: spacing.lg
+  },
+  lead: {
+    color: color.white,
+    fontSize: font.xl,
+    fontFamily: "Nunito_400Regular",
   },
 });
