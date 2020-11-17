@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Text, StyleSheet } from "react-native";
 import { color, spacing, radius, font } from "../../constants/Vars";
 import { AppLoading } from "expo";
+import { formatNumber } from "libphonenumber-js";
+
 import {
   useFonts,
   Nunito_400Regular,
@@ -15,12 +17,24 @@ export default function QRText(props) {
     Nunito_600SemiBold,
     Nunito_700Bold,
   });
+
+
+  const formatContent = (content) => {
+    console.log(props.contentType)
+    switch (props.contentType) {
+      case "phone":
+        return !!formatNumber(content, 'International') ? formatNumber(content, 'International') : content;   
+      default:
+        return content;
+    }
+  }
+
   if (!fontsLoaded) {
     return <AppLoading />;
   }
   return (
     <Text style={!props.type ? styles.text : styles[props.type]}>
-      {props.children}
+      {formatContent(props.children)}
     </Text>
   );
 }
@@ -40,5 +54,11 @@ const styles = StyleSheet.create({
     color: color.text,
     fontSize: font.md,
     fontFamily: "Nunito_400Regular",
+  },
+
+  btn: {
+    color: color.white,
+    fontSize: font.lg,
+    fontFamily: "Nunito_600SemiBold",
   },
 });

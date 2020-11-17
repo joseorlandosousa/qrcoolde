@@ -9,7 +9,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 
 import { color, spacing, radius, font } from "../../constants/Vars";
-import { formatData } from "../../utils/dataType";
+import { formatData } from "../../utils/format";
 import t from '../../locales/i18n';
 import Modal from "react-native-modal";
 
@@ -17,10 +17,12 @@ import Modal from "react-native-modal";
 import QRItem from "../Item/QRItem";
 import QRText from "../Text/QRText";
 
+import QRButton from "../Button/QRButton";
+
 
 
 export default function QRModal(props) {
-  const [dataType, setDataType] = useState({ title: null, type: null });
+  const [dataContent, setDataContent] = useState({ title: null, type: null });
 
   useEffect(() => {
     (async () => {
@@ -30,8 +32,7 @@ export default function QRModal(props) {
 
   const setData = () => {
     if(!!props.scanned.data){
-      console.log(formatData(props.scanned.data))
-      setDataType(formatData(props.scanned.data));
+      setDataContent(formatData(props.scanned.data));
     }
   };
   return (
@@ -49,18 +50,22 @@ export default function QRModal(props) {
         </TouchableWithoutFeedback>
       }
     >
-      {!!dataType && 
+      {!!dataContent && 
         <View style={styles.modal}>
           <View style={styles.header}>
             <Feather
-              name={dataType.icon}
+              name={dataContent.icon}
               size={24}
               color={color.icon}
               style={{ marginRight: spacing.sm }}
             />
-            <QRText type="title">{t(dataType.type)}</QRText>
+            <QRText type="title">{t(dataContent.type)}</QRText>
           </View>
-          <QRItem content={props.scanned.data} type={dataType.type}></QRItem>
+          {!!dataContent.content && dataContent.content.map((item, index) => (
+            <QRItem key={index} label={item.label} content={item.content} contentType={item.contentType}></QRItem>
+          ))}
+
+          <QRButton type={dataContent.type}></QRButton>
         </View>
       }
     </Modal>
@@ -74,7 +79,10 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   modal: {
-    padding: spacing.lg,
+    paddingTop: spacing.md,
+    paddingLeft: spacing.md,
+    paddingRight: spacing.md,
+    paddingBottom: spacing.sm,
     backgroundColor: "#fff",
     borderTopLeftRadius: radius.lg,
     borderTopRightRadius: radius.lg,

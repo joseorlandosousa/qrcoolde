@@ -3,12 +3,13 @@
 //
 
 export const color = {
-  primary: "#9013FE",
-  secondary: "#BD10E0",
+  primary: "#5D13FE",
+  secondary: "#8D10E0",
 
   text: "#4F4F4F",
   icon: "#BDBDBD",
   item_bg: "#f2f2f2",
+  white: "#ffffff"
 };
 
 /**
@@ -17,7 +18,7 @@ export const color = {
 export const spacing = {
   xs: 6,
   sm: 12,
-  md: 24,
+  md: 20,
   lg: 32,
   xl: 48,
   xxl: 64,
@@ -45,6 +46,8 @@ export const controlHeight = {
   md: 48,
   lg: 56,
   xl: 64,
+  xxl: 92,
+  xxxl: 128
 };
 
 /**

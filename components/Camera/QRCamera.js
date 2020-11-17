@@ -17,7 +17,6 @@ export default function QRCamera() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned({ type, data });
-    console.log(type, data)
     Vibration.vibrate(100);
     toggleModal()
     //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
