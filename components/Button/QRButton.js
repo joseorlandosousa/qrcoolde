@@ -17,6 +17,8 @@ export default function QRButton(props) {
           // Button Linear Gradient
           colors={[color.primary, color.secondary]}
           style={styles.container}
+          start={{ x: 0.15, y: 0.9 }}
+          end={{ x: 1, y: 0 }}
         >
           <QRText type="btn">{t('btn.' + props.type)}</QRText>
         </LinearGradient>
