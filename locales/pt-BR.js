@@ -36,12 +36,12 @@ export default {
         whatsapp: "Enviar WhatsApp",
         url: "Abrir no navegador",
         text: "Copiar texto",
-        camPermission: "Habilitar a camera"
+        camPermission: "Habilitar a câmera"
     },
 
     camPermission: {
-        title: "Camera sem permissão",
-        description: "A camera é usada somente para ler o QRCode."
+        title: "Câmera sem permissão",
+        description: "A câmera é usada somente para ler o QRCode."
     }
 
 }

@@ -26,8 +26,11 @@
       },
       "permissions": [
         "CONTACTS",
-        "WRITE_CONTACTS"
-      ]
+        "WRITE_CONTACTS",
+        "CAMERA",
+        "VIBRATE"
+      ],
+      "package": "com.freella.qrcoolde"
     },
     "web": {
       "favicon": "./assets/favicon.png"
