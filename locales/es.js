@@ -42,6 +42,11 @@ export default {
     camPermission: {
         title: "Cámara sin permiso",
         description: "La cámara se usa solo para leer el QRCode."
+    },
+
+    flashMode: {
+        on: 'Double-tap to turn on the flashlight',
+        off: 'Toca dos veces para encender la linterna',
     }
 
 

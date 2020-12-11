@@ -8,6 +8,8 @@ import {
   Dimensions,
   Animated,
   Platform,
+  TouchableWithoutFeedback,
+  ToastAndroid
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Camera } from "expo-camera";
@@ -15,6 +17,7 @@ import { Camera } from "expo-camera";
 import QRModal from "../Modal/QRModal";
 import { color } from "../../constants/Vars";
 import QRCamNoAccess from "../Pages/QRCamNoAccess";
+import t from '../../locales/i18n';
 
 const { width } = Dimensions.get("window");
 const windowWidth = width - 180;
@@ -25,9 +28,8 @@ export default function QRCamera() {
   const [scanned, setScanned] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [cameraRatio, setCameraRatio] = useState(null);
-
-  let cameraRef;
-  let cameraSize;
+  const [cameraRef, setCameraRef] = useState(null);
+  const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
 
   const PulseAnim = useRef(new Animated.Value(windowWidth)).current;
 
@@ -37,10 +39,33 @@ export default function QRCamera() {
     })();
   }, []);
 
+  /**
+   * Asks for camera permission
+   */
   const handleRequestPermission = async () => {
     const { status } = await BarCodeScanner.requestPermissionsAsync();
     setHasPermission(status === "granted");
   };
+
+  /**
+   * Animation for the QRCode Marker
+   */
+  const animateMarker = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(PulseAnim , {
+          toValue: windowWidth - 20,
+          duration: 1000,
+          useNativeDriver: false
+        }),
+        Animated.timing(PulseAnim , {
+          toValue: windowWidth,
+          duration: 1000,
+          useNativeDriver: false
+        })
+      ])
+    ).start();
+  }
 
   /**
    * QRCode Scaned
@@ -78,8 +103,49 @@ export default function QRCamera() {
       // Usually the last element of "ratios" is the maximum supported ratio
       const ratio = ratios.find((ratio) => ratio === DESIRED_RATIO) || ratios[ratios.length - 1];
       setCameraRatio(ratio);
+      
     }
   };
+  
+  /**
+   * Runs when the camera is ready
+   */
+  const handleCameraReady = () => {
+    prepareRatio();
+    animateMarker();
+  }
+
+  /**
+   * Change the flash mode on double tap
+   */
+  var lastTap = null;
+  var tapInterval = null;
+  const handleCameraPress = () => {
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    // toggle FlashMode
+    if (lastTap && (now - lastTap) < DOUBLE_PRESS_DELAY) {
+      if(tapInterval){
+        clearTimeout(tapInterval);
+      }
+      setFlashMode(flashMode == Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.torch : Camera.Constants.FlashMode.off);
+    } else {
+      if(tapInterval){
+        clearTimeout(tapInterval);
+      }
+
+      tapInterval = setTimeout(()=>{
+        if(flashMode == Camera.Constants.FlashMode.off){
+          ToastAndroid.show(t('flashMode.on'), ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(t('flashMode.off'), ToastAndroid.SHORT);
+        }
+      }, 500)
+      
+      lastTap = now;
+    }
+  }
+
 
   /**
    * Camera loading
@@ -117,23 +183,26 @@ export default function QRCamera() {
         style={styles.camera}
         autoFocus={true}
         ref={(ref) => {
-          cameraRef = ref;
+          setCameraRef(ref);
         }}
         ratio={cameraRatio}
-        cameraSize={cameraSize}
         whiteBalance="auto"
         zoom={0}
-        onCameraReady={prepareRatio}
+        onCameraReady={handleCameraReady}
+        flashMode={flashMode}
       >
-        <Animated.Image
-          style={{
-            width: PulseAnim,
-            height: PulseAnim,
-            position: "relative",
-            opacity: !isModalVisible ? 1 : 0,
-          }}
-          source={require("../../assets/marker.png")}
-        ></Animated.Image>
+        <TouchableWithoutFeedback style={{ flex:1 }} onPress={handleCameraPress}>
+          <Animated.Image
+            style={{
+              width: PulseAnim,
+              height: PulseAnim,
+              position: "absolute",
+              opacity: !isModalVisible ? 1 : 0,
+            }}
+            source={require("../../assets/marker.png")}
+          ></Animated.Image>
+
+        </TouchableWithoutFeedback>
       </Camera>
       <QRModal
         isModalVisible={isModalVisible}
