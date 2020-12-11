@@ -1,5 +1,10 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "author": {
+    "name": "José Orlando Sousa",
+    "email": "joseorlandosousa@gmail.com",
+    "url": "http://freella.com"
+  },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -12,7 +17,6 @@
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/clipboard": "^1.5.1",
     "expo": "~39.0.2",
-    "expo-barcode-scanner": "~9.0.0",
     "expo-camera": "^9.1.0",
     "expo-contacts": "~8.5.0",
     "expo-font": "~8.3.0",
