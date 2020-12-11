@@ -11,7 +11,6 @@ import {
   TouchableWithoutFeedback,
   ToastAndroid
 } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
 import { Camera } from "expo-camera";
 
 import QRModal from "../Modal/QRModal";
@@ -43,7 +42,7 @@ export default function QRCamera() {
    * Asks for camera permission
    */
   const handleRequestPermission = async () => {
-    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    const { status } = await Camera.requestPermissionsAsync();
     setHasPermission(status === "granted");
   };
 
