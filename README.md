@@ -1,4 +1,4 @@
-![QRCoolde](https://lh4.googleusercontent.com/5OURO04MaCeShO2aiZfL7mWmrkgWv01zU_C7YEUy4W3c0An4Im0w3-muAnzM1tIKas072LJR4pUkhrI0C4I8=w1640-h922-rw)
+![QRCoolde](https://i.ibb.co/YyHFdFD/Recurso-Grafico.png)
 
 # QRCoolde.
 Leitor de QR Code Simples, Prático e Rápido para Android.
