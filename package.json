@@ -1,9 +1,17 @@
 {
+  "name": "QRCoolde.",
+  "description": "Leitor de QR Code Simples, Prático e Rápido para Android",
   "main": "node_modules/expo/AppEntry.js",
   "author": {
     "name": "José Orlando Sousa",
     "email": "joseorlandosousa@gmail.com",
     "url": "http://freella.com"
+  },
+  "homepage": "https://github.com/owner/project#readme",
+  "license" : "Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/joseorlandosousa/qrcool.git"
   },
   "scripts": {
     "start": "expo start",
